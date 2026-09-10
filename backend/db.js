@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
     user: 'root',
     password: 'root',
     database: 'saep_db',
-    port: 3307
+    port: 3306
 });
 
 //Tenta realizar a conexão com o banco
