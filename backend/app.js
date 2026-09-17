@@ -73,7 +73,34 @@ server.post('/produtos', (req, res) => {
     });
 });
 
+    server.put('/produtos/:id', (req, res) => {
+            const {id_categoria, nome, cor, textura, peso, unidade_medida, aplicacao,
+         data_validade, estoque_minimo, estoque_atual, preco_unitario
+        } = req.body;
 
+        const {id} = req.params;
+
+        const sql = 'UPDATE PRODUTO SET id_categoria = ?, nome = ?, cor = ?, textura = ?, peso = ?, unidade_medida = ?, aplicacao = ?, data_validade = ?, estoque_minimo = ?, estoque_atual = ?, preco_unitario = ? WHERE id_produto = ?';
+
+        connectDB.query(sql, [id_categoria, nome, cor, textura, peso, unidade_medida, aplicacao, data_validade, estoque_minimo, estoque_atual, preco_unitario, id], (erro) => {
+            if (erro) {
+                return res.status(500).json({ erro: 'Erro ao atualizar produto' });
+            }
+            res.json({ mensagem: 'Produto atualizado com sucesso' });
+        });
+});
+
+server.delete('/produtos/:id', (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM PRODUTO WHERE id_produto = ?';
+
+    connectDB.query(sql, [id], (erro, resultado) => {
+        if (erro) {
+            return res.status(500).json({ erro: 'Erro ao excluir produto' });
+        }
+        res.json({ mensagem: 'Produto excluído com sucesso' });
+    });
+});
 
 const PORT = 3025;
 
